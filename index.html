@@ -6,8 +6,28 @@
     <title>AniList to Joplin</title>
   </head>
   <body>
-    <div id="anilist-query">test
-    </div>
+    <h1>AniList to Joplin Backup Tool</h1>
+      <p>Easy-to-use for non-programmers</p>
+      <br>
+      <form>
+        <p>Input Joplin access-token</p>
+        <input type="text"></input>
+        <p>You can find it on a computer under settings > Web Clipper. Make sure to enable the webclipper as well. The port has to be "41184" and if it isn't, you'll have to edit the javascript at line 5264 and 5272</p>
+        <br>
+        <p>AniList user ID</p>
+        <input type="text"></input>
+        <p>You can find this by going to your profile, opening your profile picture in a new tab and looking at the URL (page link). The user ID should be the numbers where I put X's in my example here: user/avatar/large/b<b>XXXXXX</b>-sga2KA4fswV1.png</p>
+        <br>
+        <p>Notebook ID for where you want to place it all in Joplin</p>
+        <input type="text"></input>
+        This one is a bit more complicated to figure out, so I'll provide you with a tool to fetch all your notebook IDs easily below.
+        <br>
+        <br>
+        <input type="checkbox">I want to fetch every post (defaults to latest 50 if not)</input>
+        <p>it's only recommended to use this if you have never fetched your posts before or if you suspect you've written or recieved more than 50 posts/comments since last time you used this backup</p>
+        <input type="button" value="Fetch Posts"></input>
+
+      </form>
     <script src="AniListFetch.js."></script>
   </body>
 </html>
