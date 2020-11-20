@@ -5096,20 +5096,6 @@ function aniListMarkdown(content) {
   return content;
 }
 
-// var pages = [];
-//
-// function handlePage(page) {
-//   // set the page number for options
-//   let pageOptions = /*blah*/;
-//   return fetch(urlForPage, pageOptions)
-//        .then(handleResponse)
-//        .then(function (data) {
-//     pages[pageNum] = data;
-//     if (data.pageInfo.HasNextPage)
-//       return handlePage(page + 1);
-//   });
-// }
-
 // Here we define our query as a multi-line string
 // Storing it in a separate .graphql/.gql file is also possible
 var query = `
@@ -5287,8 +5273,8 @@ function handleData(data) {
 
     });
       // repeat the code until no more pages left
-    // if (data.data.Page.pageInfo.hasNextPage)
-    //   return queryPage(variables.page + 1);
+    if (data.data.Page.pageInfo.hasNextPage)
+      return queryPage(variables.page + 1);
 };
 
 // Errorhandling
