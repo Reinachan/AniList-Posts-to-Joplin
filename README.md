@@ -26,11 +26,11 @@ First of all, open the HTML in a text editor (**Do not run it in a browser!**). 
 
 ## Planned
 
-In order of priority:
+In order of priority
 
 - A simple interface with instructions for non-coders to be able to use
   - I've sketched this out already
-  - A button to trigger it instead of running it on launch
+  - A button to trigger it instead of running it on page refresh
 - Kitsu support
 - Conversion of `webm(link)` to the video/audio HTML blocks
 
