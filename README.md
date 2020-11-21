@@ -4,19 +4,24 @@ Uses the AniList API to fetch posts and comments and then makes a notes in Jopli
 
 <br>
 
-## Currently Working
+## Release
+The first release should work well so long as you follow the instructions in `index.html`. It is, however, a pre-release, so do make sure to keep a backup of your Joplin notes in case anything breaks. Make sure to [report bugs](https://github.com/Reinachan/AniList-Posts-to-Joplin/issues) if you spot any.
 
-I've outlined what it currently does in the features section, however, before you download this and run it, let me outline what you have to do.
+https://github.com/Reinachan/AniList-Posts-to-Joplin/releases
 
-First of all, open the HTML in a text editor (**Do not run it in a browser!**). There you'll see the general stuff you'll need to edit to make it work for yourself. After that, edit the javascript. My code starts at line 5068. I just didn't want to deal with some issues I had with CORS when referencing code in another file, so I put the ratelimiter in the main javascript file.
+<br>
+
+## Dependency
+You need to install [Joplin](https://joplinapp.org/) to use this tool. Unless you want to tweak it yourself to your own needs.
 
 <br>
 
 ## Features
 
+- A simple interface with instructions for non-coders to be able to use
 - Fetches posts and comments from AniList
 - Combines the comments under the posts in a combined markdown-formated document
-- Nice styling to make it all look neat.
+- Nice styling to make it look neat in Joplin.
 - Tracks likes, however, only when fetching all the posts (for now)
 - Converts AniList flavoured markdown to CommonMark or HTML. Currently supports 
   - Image with width in pixels
@@ -24,14 +29,18 @@ First of all, open the HTML in a text editor (**Do not run it in a browser!**). 
   - Spoilers
     - `~! content !~` to `<details><summary>Spoiler, click to view</summary> content </details>`
 
+<br>
+
 ## Planned
 
 In order of priority
 
-- A simple interface with instructions for non-coders to be able to use
-  - I've sketched this out already
-  - A button to trigger it instead of running it on page refresh
+- Improve the UI styling
 - Kitsu support
 - Conversion of `webm(link)` to the video/audio HTML blocks
 
-Shoutout to @trigger-segfault for being an immense help while I was struggling to re-learn JavaScript! He also wrote some parts of the code behind the scenes and helped me understand what they were doing!
+<br>
+
+## Afterwords
+
+Shoutout to @trigger-segfault for being an immense help while I was struggling to re-learn JavaScript! He also wrote some parts of the code behind the scenes and helped me understand what it was doing!
