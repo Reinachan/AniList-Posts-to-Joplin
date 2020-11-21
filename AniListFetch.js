@@ -5086,16 +5086,18 @@ let customStyleUsernameCommentsPart3 = '" style="float:left;margin-right:15px;he
 let customStyleUsernameCommentsPart4 = '</b></p></div>'
 //#endregion
 
-  //Joplin Access Token
-let joplinToken = "token="
 
 // RegEx to convert AniList-flavoured Markdown to HTML
 function aniListMarkdown(content) {
-  content = content.replace(/img(\d{1,4})\((.{1,500}.{1,5})\)/g, '<img src="$2" width="$1"/>');
-  content = content.replace(/img\((.{1,500}.{1,5})\)/g, '![]($1)');
-  content = content.replace(/~!([\s\S]{1,}?)!~/g, '<details><summary>Spoiler</summary>$1</details>');
-  content = content.replace(/(~~~)([\s\S]{1,}?)(~~~)/g, '<center>$2</center>')
-  return content;
+	// replace img####(link)
+	content = content.replace(/img(\d{1,4})\((.{1,500}.{1,5})\)/g, '<img src="$2" width="$1"/>');
+	// replace img(link)
+	content = content.replace(/img\((.{1,500}.{1,5})\)/g, '![]($1)');
+	// replace ~! content !~ spoilers
+	content = content.replace(/~!([\s\S]{1,}?)!~/g, '<details><summary>Spoiler</summary>$1</details>');
+	// replace ~~~ content ~~~ center
+	content = content.replace(/(~~~)([\s\S]{1,}?)(~~~)/g, '<center>$2</center>')
+return content;
 }
 
 // Here we define our query as a multi-line string
@@ -5141,42 +5143,52 @@ query ($id: Int, $type: ActivityType, $page: Int) {
 }
 `;
 
-// Define our query variables and values that will be used in the query request
-var variables = {
-  id: 110292,
-  page: 1,
-  type: "TEXT"
-};
+// Start the code when the user pressses "fetch posts"
+document.getElementById('fetch-posts').onclick = function getFormStuff() {
+	// Give the user feedback that their buttonpress has been registered
+	var starting = document.createElement("p");
+	starting.innerHTML = "Your posts are being backed up. Hold on.";
+		document.getElementById("completed").appendChild(starting);
+	
+	//Fetch data from the HTML form	
+	let anilistUserID = document.getElementById('anilist-user-id').value;
 
-// Define the config we'll need for our Api request
-var url = 'https://graphql.anilist.co'
-    options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-            query: query,
-            variables: variables
-        })
-    };
+	// Define our query variables and values that will be used in the query request
+	var variables = {
+		id: anilistUserID,
+		page: 1,
+		type: "TEXT"
+	};
+	
+	// Define the config we'll need for our Api request
+	var url = 'https://graphql.anilist.co'
+		options = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json',
+			},
+			body: JSON.stringify({
+				query: query,
+				variables: variables
+			})
+		};
 
-function queryPage(page) {
-  variables.page = page; // update page variable before adding to options
-  // update options.body with the new variables (updated page)
-  options.body = JSON.stringify({
-            query: query,
-            variables: variables
-        });
-  // Make the HTTP Api request
-  return limiter.schedule(() => fetch(url, options)
-                                     .then(handleResponse)
-                                     .then(handleData)
-                                     .catch(handleError));
-}
+	function queryPage(page) {
+	variables.page = page; // update page variable before adding to options
+	// update options.body with the new variables (updated page)
+	options.body = JSON.stringify({
+				query: query,
+				variables: variables
+			});
+	// Make the HTTP Api request
+	return limiter.schedule(() => fetch(url, options)
+										.then(handleResponse)
+										.then(handleData)
+										.catch(handleError));
+	}
 
-queryPage(1);
+	queryPage(1);
 
 function handleResponse(response) {
     return response.json().then(function (json) {
@@ -5185,14 +5197,26 @@ function handleResponse(response) {
 }
 
 function handleData(data) {
+
+	// fetch data from the form
+	let joplinToken = "?token=" + document.getElementById('joplin-access-token').value;
+	let joplinNotebookID = document.getElementById('notebook-id').value;
+	let fetchAllPosts = document.getElementById('fetch-all-posts').checked;
+
     data.data.Page.activities.forEach(activities => {
 
         // Get the posts themselves
         var activityPost = activities.text;
 
         // RegEx a title for the note
-        var postTitle = activityPost.replace(/^#*\s*(~~~\s*)?(.*?)(\s*~~~)?\s*$/m, '$2');
-        postTitle = postTitle.replace(/(.{1,75})[^]*/g, '$1');
+		var postTitle = activityPost.replace(/^#*\s*(~~~\s*)?(.*?)(\s*~~~)?\s*$/m, '$2');
+		
+		console.log("pre", postTitle)
+
+		postTitle = postTitle.replace(/(.{1,75})[^]*/g, '$1');
+
+		console.log("post", postTitle)
+		
 
         // Convert posts to common Markdown format/HTML
         activityPost = aniListMarkdown(activityPost);
@@ -5241,7 +5265,7 @@ function handleData(data) {
           body: JSON.stringify({
             "id": postID,
             "title": postTitle,
-            "parent_id": parentID,
+            "parent_id": joplinNotebookID,
             "body": postWithCommentsAndNames,
             "created_time": postCreated,
             "user_created_time": postCreated
@@ -5249,15 +5273,12 @@ function handleData(data) {
         };
 
         //Sending the data to Joplin
-        fetch("http://localhost:41184/notes?" + joplinToken, toJoplin)
+        fetch("http://localhost:41184/notes" + joplinToken, toJoplin)
         .then(res => {
-          console.log(res)
-
-
           if (res.ok) {
             console.log("Request complete! response:", res);
           } else {
-              fetch("http://localhost:41184/notes/" + postID + "?" + joplinToken, {
+              fetch("http://localhost:41184/notes/" + postID + joplinToken, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
@@ -5271,16 +5292,54 @@ function handleData(data) {
             })
           }
         });
-
-
     });
       // repeat the code until no more pages left
-    if (data.data.Page.pageInfo.hasNextPage)
-      return queryPage(variables.page + 1);
+	if (fetchAllPosts)
+	  if (data.data.Page.pageInfo.hasNextPage) {
+		  return queryPage(variables.page + 1);
+	  } else {
+		  //tell the user they've backed up 50 posts
+		var completion = document.createElement("p");
+		completion.innerHTML = "All your activities have been backed up to Joplin!";
+		document.getElementById("completed").appendChild(completion);
+	  } else {
+		  //tell the user they've backed up all posts
+		var completion = document.createElement("p");
+		completion.innerHTML = "The latest 50 activities have been backed up to Joplin!";
+		document.getElementById("completed").appendChild(completion);
+	  } 
 };
 
 // Errorhandling
 function handleError(error) {
     alert('Error, check console');
     console.error(error);
+}
+}
+
+// When you press the "Get all notebook IDs" button, you'll recieve a list
+// of notebook titles and IDs
+document.getElementById('fetch-notebook-id').onclick = function getNotebookIDs() {
+	fetch("http://localhost:41184/folders", {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              	}
+			
+			}).then(function(response) {
+				return response.json();
+			}).then(function(data) {
+				let jsonString = JSON.stringify(data);
+
+				// Format the notebook information and remove all that is unecessary
+				var notebookInfo = jsonString.replace(/(\[\{"id":"|d":")(\S{31,33})","parent_id":\S{1,50},"title":"([\s\S]{1,50})","type_([\s\S]{1,}?"i|[\s\S]{1,})/g, 'Notebook: $3<br>ID: $2 <br><br>')
+
+				// Send the notebook information to the document
+				const notebookInformation = document.createElement('p')
+				notebookInformation.innerHTML = notebookInfo;
+				document.body.appendChild(notebookInformation)
+				console.log(data);
+			}).catch(res => {
+				console.log("error", res);
+			});
 }
