@@ -1,3 +1,4 @@
+//#region "Bottleneck ratelimiter code"
 /**
   * This file contains the full Bottleneck library (MIT) compiled to ES5.
   * https://github.com/SGrondin/bottleneck
@@ -5062,14 +5063,15 @@
 	return es5;
 
 })));
-
+//#endregion
 
 // ratelimiter
 const limiter = new Bottleneck({
-  minTime: 333
+  minTime: 1500
 });
 
-//Defining stuff for later to not clutter the code with long stuff
+// Defining stuff for later so as to not clutter the code
+//#region "Formating definition to make it all look neat in Joplin"
   // HTML styling of the username and link
 let customStyleUsernamePart1 = '<div style="width:98%; background-color:#181A1D;border-bottom:4px solid #2E3138; height:68px;padding:5px;padding-left:8px;margin-bottom:20px;border-radius:2px;"><svg width=".85em" height=".85em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="#E85D75" xmlns="http://www.w3.org/2000/svg" style="float:right; margin-right: 20px;margin-top:13px;"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/></svg><p style="float:right; margin-right: 4px; transform: translateY(-2px);font-size:1em;color:#E85D75;"> <b>'
 let customStyleUsernamePart2 = '</b></p><img src="'
@@ -5082,7 +5084,7 @@ let customStyleUsernameCommentsPart1 = '<div style="width:98%; background-color:
 let customStyleUsernameCommentsPart2 = '</b></p><img src="'
 let customStyleUsernameCommentsPart3 = '" style="float:left;margin-right:15px;height:67px;width:67px;object-fit:cover;"/> <p style="font-size:1.5em;line-height:4px;color:#F2F3F4;margin-top:33px;margin-bottom:9px;"><b>'
 let customStyleUsernameCommentsPart4 = '</b></p></div>'
-
+//#endregion
 
   //Joplin Access Token
 let joplinToken = "token="
