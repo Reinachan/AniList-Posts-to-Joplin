@@ -10,24 +10,29 @@
       <p>Easy-to-use for non-programmers</p>
       <br>
       <form>
-        <p>Input Joplin access-token</p>
-        <input type="text"></input>
+        <label for="joplin-access-token">Joplin access-token:</label>
+        <input type="text" id="joplin-access-token"></input>
         <p>You can find it on a computer under settings > Web Clipper. Make sure to enable the webclipper as well. The port has to be "41184" and if it isn't, you'll have to edit the javascript at line 5264 and 5272</p>
         <br>
-        <p>AniList user ID</p>
-        <input type="text"></input>
+        <label for="anilist-user-id">AniList user ID:</label>
+        <input type="text" id="anilist-user-id"></input>
         <p>You can find this by going to your profile, opening your profile picture in a new tab and looking at the URL (page link). The user ID should be the numbers where I put X's in my example here: user/avatar/large/b<b>XXXXXX</b>-sga2KA4fswV1.png</p>
         <br>
-        <p>Notebook ID for where you want to place it all in Joplin</p>
-        <input type="text"></input>
-        This one is a bit more complicated to figure out, so I'll provide you with a tool to fetch all your notebook IDs easily below.
+        <label for="joplin-access-token">Notebook ID</label>
+        <input type="text" id="notebook-id"></input>
+        <p>For where you want to place it all in Joplin
+        <br><br>
+        This one is a bit more complicated to figure out, so I'll provide you with a tool to fetch all your notebook IDs easily below</p>
         <br>
         <br>
-        <input type="checkbox">I want to fetch every post (defaults to latest 50 if not)</input>
-        <p>it's only recommended to use this if you have never fetched your posts before or if you suspect you've written or recieved more than 50 posts/comments since last time you used this backup</p>
-        <input type="button" value="Fetch Posts"></input>
-
+        <input type="checkbox" id="fetch-all-posts">I want to fetch every post (defaults to latest 50 if not)</input>
+        <p>it's only recommended to use this if you have never fetched your posts before or if you suspect you've written or recieved more than 50 posts/messages since last time you used this backup. That or if you know you've recieved likes/comments on older posts that you want to backup</p>
+        <input type="button" value="Backup Posts to Joplin" id="fetch-posts"></input>
       </form>
+      <br>
+      <h1>Get a list of all Notebooks along with their IDs</h1>
+      <input type="button" value="Get all notebook IDs" id="fetch-notebook-id"></input>
+
     <script src="AniListFetch.js."></script>
   </body>
 </html>
