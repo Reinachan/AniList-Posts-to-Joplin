@@ -7,12 +7,16 @@
   </head>
   <body>
     <h1>AniList to Joplin Backup Tool</h1>
-      <p>Easy-to-use for non-programmers</p>
+      <h4>Easy-to-use for non-programmers</h4>
+      <p>Note that Joplin seems to have a bug which means that it occasionally won't the note ID that I create through a function. That causes a duplication of those posts. If you get duplicate posts, delete all posts and run the tool again. This is likely a problem with the web-syncing tool</p>
       <br>
       <form>
         <label for="joplin-access-token">Joplin access-token:</label>
         <input type="text" id="joplin-access-token"></input>
-        <p>You can find it on a computer under settings > Web Clipper. Make sure to enable the webclipper as well. The port has to be "41184" and if it isn't, you'll have to edit the javascript at line 5264 and 5272</p>
+        <p>You can find it on a computer under settings > Web Clipper. Make sure to enable the webclipper as well. The port has to be "41184" and if it isn't, you'll have to edit the javascript.</p>
+        <label for="joplin-port">Joplin port:</label>
+        <input type="text" id="joplin-port" value="41184"></input>
+        <p>You'll find this at the top of the same menu you found the access token in. It should be 41184, but if not, you'll have to type in that number in the box above</p>
         <br>
         <label for="anilist-user-id">AniList user ID:</label>
         <input type="text" id="anilist-user-id"></input>
@@ -26,7 +30,7 @@
         <br>
         <br>
         <input type="checkbox" id="fetch-all-posts">I want to fetch every post (defaults to latest 50 if not)</input>
-        <p>it's only recommended to use this if you have never fetched your posts before or if you suspect you've written or recieved more than 50 posts/messages since last time you used this backup. That or if you know you've recieved likes/comments on older posts that you want to backup</p>
+        <p>It's only recommended to use this if you have never fetched your posts before or if you suspect you've written or recieved more than 50 posts/messages since last time you used this backup. That or if you know you've recieved likes/comments on older posts that you want to backup</p>
         <input type="button" value="Backup Posts to Joplin" id="fetch-posts"></input>
       </form>
       <br>
@@ -34,6 +38,7 @@
       <br>
       <br>
       <h1>Get a list of all Notebooks along with their IDs</h1>
+      <p>Requires correct port in the section above</p>
       <input type="button" value="Get all notebook IDs" id="fetch-notebook-id"></input>
       <div id="show-notebooks"></div>
     <script src="AniListFetch.js."></script>

@@ -5202,6 +5202,7 @@ function handleData(data) {
 	let joplinToken = "?token=" + document.getElementById('joplin-access-token').value;
 	let joplinNotebookID = document.getElementById('notebook-id').value;
 	let fetchAllPosts = document.getElementById('fetch-all-posts').checked;
+	let joplinPort = document.getElementById('joplin-port').value;
 
     data.data.Page.activities.forEach(activities => {
 
@@ -5273,12 +5274,12 @@ function handleData(data) {
         };
 
         //Sending the data to Joplin
-        fetch("http://localhost:41184/notes" + joplinToken, toJoplin)
+        fetch(`http://localhost:${joplinPort}/notes${joplinToken}`, toJoplin)
         .then(res => {
           if (res.ok) {
             console.log("Request complete! response:", res);
           } else {
-              fetch("http://localhost:41184/notes/" + postID + joplinToken, {
+              fetch(`http://localhost:${joplinPort}/notes/${postID}${joplinToken}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
@@ -5320,7 +5321,8 @@ function handleError(error) {
 // When you press the "Get all notebook IDs" button, you'll recieve a list
 // of notebook titles and IDs
 document.getElementById('fetch-notebook-id').onclick = function getNotebookIDs() {
-	fetch("http://localhost:41184/folders", {
+	let joplinPort = document.getElementById('joplin-port').value;
+	fetch(`http://localhost:${joplinPort}/folders`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
@@ -5332,13 +5334,12 @@ document.getElementById('fetch-notebook-id').onclick = function getNotebookIDs()
 				let jsonString = JSON.stringify(data);
 
 				// Format the notebook information and remove all that is unecessary
-				var notebookInfo = jsonString.replace(/(\[\{"id":"|d":")(\S{31,33})","parent_id":\S{1,50},"title":"([\s\S]{1,50})","type_([\s\S]{1,}?"i|[\s\S]{1,})/g, 'Notebook: $3<br>ID: $2 <br><br>')
+				var notebookInfo = jsonString.replace(/(\[\{"id":"|d":")(\S{31,33})","parent_id":\S{1,50},"title":"([\s\S]{1,50})","type_([\s\S]{1,}?"i|[\s\S]{1,})/g, '<p><b>Notebook:</b> $3<br><b>ID:</b> $2 <br><br></p>')
 
 				// Send the notebook information to the document
-				const notebookInformation = document.createElement('p')
+				const notebookInformation = document.createElement('div')
 				notebookInformation.innerHTML = notebookInfo;
-				document.body.appendChild(notebookInformation)
-				console.log(data);
+				document.getElementById("show-notebooks").appendChild(notebookInformation)
 			}).catch(res => {
 				console.log("error", res);
 			});
