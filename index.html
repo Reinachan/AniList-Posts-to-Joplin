@@ -1,46 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="style.css">
-    <title>AniList to Joplin</title>
-  </head>
-  <body>
-    <h1>AniList to Joplin Backup Tool</h1>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <title>AniList to Joplin</title>
+</head>
+
+<body class="bg-black">
+  <div class="container-lg anilist">
+    <div class="container-fluid mt-5 mb-0 p-4 title">
+      <h1>AniList to Joplin Backup Tool</h1>
       <h4>Easy-to-use for non-programmers</h4>
-      <p>Note that Joplin seems to have a bug which means that it occasionally won't the note ID that I create through a function. That causes a duplication of those posts. If you get duplicate posts, delete all posts and run the tool again. This is likely a problem with the web-syncing tool</p>
-      <br>
-      <form>
-        <label for="joplin-access-token">Joplin access-token:</label>
-        <input type="text" id="joplin-access-token"></input>
-        <p>You can find it on a computer under settings > Web Clipper. Make sure to enable the webclipper as well. The port has to be "41184" and if it isn't, you'll have to edit the javascript.</p>
-        <label for="joplin-port">Joplin port:</label>
-        <input type="text" id="joplin-port" value="41184"></input>
-        <p>You'll find this at the top of the same menu you found the access token in. It should be 41184, but if not, you'll have to type in that number in the box above</p>
-        <br>
-        <label for="anilist-user-id">AniList user ID:</label>
-        <input type="text" id="anilist-user-id"></input>
-        <p>You can find this by going to your profile, opening your profile picture in a new tab and looking at the URL (page link). The user ID should be the numbers where I put X's in my example here: user/avatar/large/b<b>XXXXXX</b>-sga2KA4fswV1.png</p>
-        <br>
-        <label for="joplin-access-token">Notebook ID</label>
-        <input type="text" id="notebook-id"></input>
-        <p>For where you want to place it all in Joplin
-        <br><br>
-        This one is a bit more complicated to figure out, so I'll provide you with a tool to fetch all your notebook IDs easily below</p>
-        <br>
-        <br>
-        <input type="checkbox" id="fetch-all-posts">I want to fetch every post (defaults to latest 50 if not)</input>
-        <p>It's only recommended to use this if you have never fetched your posts before or if you suspect you've written or recieved more than 50 posts/messages since last time you used this backup. That or if you know you've recieved likes/comments on older posts that you want to backup</p>
-        <input type="button" value="Backup Posts to Joplin" id="fetch-posts"></input>
-      </form>
-      <br>
-      <div id="completed"></div>
-      <br>
-      <br>
-      <h1>Get a list of all Notebooks along with their IDs</h1>
-      <p>Requires correct port in the section above</p>
-      <input type="button" value="Get all notebook IDs" id="fetch-notebook-id"></input>
-      <div id="show-notebooks"></div>
-    <script src="AniListFetch.js."></script>
-  </body>
+      Note that Joplin seems to have a bug which means that it occasionally won't the note ID that I create through a
+        function. That causes a duplication of those posts. If you get duplicate posts, delete all posts and run the
+        tool again. This is likely a problem with the web-syncing tool
+    </div>
+    <form class="container-lg mt-0 p-4">
+      <label for="joplin-access-token">Joplin access-token:</label>
+      <input type="text" id="joplin-access-token"></input>
+      <p>You can find it on a computer under settings > Web Clipper. Make sure to enable the webclipper as well. The
+        port has to be "41184" and if it isn't, you'll have to edit the javascript.</p>
+      <label for="joplin-port">Joplin port:</label>
+      <input type="text" id="joplin-port" value="41184"></input>
+      <p>You'll find this at the top of the same menu you found the access token in. It should be 41184, but if not,
+        you'll have to type in that number in the box above</p>
+      <label for="anilist-user-id">AniList user ID:</label>
+      <input type="text" id="anilist-user-id"></input>
+      <p>You can find this by going to your profile, opening your profile picture in a new tab and looking at the URL
+        (page link). The user ID should be the numbers where I put X's in my example here:
+        user/avatar/large/b<b>XXXXXX</b>-sga2KA4fswV1.png</p>
+      <label for="joplin-access-token">Notebook ID</label>
+      <input type="text" id="notebook-id"></input>
+      <p>For where you want to place it all in Joplin
+        This one is a bit more complicated to figure out, so I'll provide you with a tool to fetch all your notebook IDs
+        easily below
+      </p>
+      <input type="checkbox" id="fetch-all-posts">I want to fetch every post (defaults to latest 50 if not)</input>
+      <p>It's only recommended to use this if you have never fetched your posts before or if you suspect you've written
+        or recieved more than 50 posts/messages since last time you used this backup. That or if you know you've
+        recieved likes/comments on older posts that you want to backup</p>
+      <input type="button" value="Backup Posts to Joplin" id="fetch-posts" class="btn btn-primary"></input>
+    </form>
+    <div id="completed" class="alert-success"></div>
+    <h1>Get a list of all Notebooks along with their IDs</h1>
+    <p>Requires correct port in the section above</p>
+    <input type="button" value="Get all notebook IDs" id="fetch-notebook-id"></input>
+    <div id="show-notebooks" class="container-lg"></div>
+  </div>
+</body>
+<footer>
+  <p>Developed by Reina</p>
+
+</footer>
+
+<script src="AniListFetch.js."></script>
+
 </html>
