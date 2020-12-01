@@ -5318,6 +5318,8 @@ function handleError(error) {
 }
 }
 
+var notebookInformation = document.querySelector('#show-notebooks')
+
 // When you press the "Get all notebook IDs" button, you'll recieve a list
 // of notebook titles and IDs
 document.getElementById('fetch-notebook-id').onclick = function getNotebookIDs() {
@@ -5331,15 +5333,36 @@ document.getElementById('fetch-notebook-id').onclick = function getNotebookIDs()
 			}).then(function(response) {
 				return response.json();
 			}).then(function(data) {
-				let jsonString = JSON.stringify(data);
+				let jsonString = data;
 
-				// Format the notebook information and remove all that is unecessary
-				var notebookInfo = jsonString.replace(/(\[\{"id":"|d":")(\S{31,33})","parent_id":\S{1,50},"title":"([\s\S]{1,50})","type_([\s\S]{1,}?"i|[\s\S]{1,})/g, '<p><b>Notebook:</b> $3<br><b>ID:</b> $2 <br><br></p>')
+				console.log(jsonString)
+
+				// Get rid of existing elements in DOM before inserting new
+				document.getElementById('show-notebooks').innerHTML = "";
+
+				// Append Notebook title and id
+				for (var item in jsonString) {
+					if (jsonString.hasOwnProperty(item)) {
+						var element = jsonString[item];
+						var listAll = document.createElement('div');
+
+						listAll.className = 'notes col-md-6 py-2 px-2';
+						listAll.innerHTML =
+							'<div class="individual-notes col-md-12 p-3 pr-5 pt-4 rounded-lg shadow-small">' +
+								'<h5 class="mb-3">' + element.title + '</h5>' +
+								'<p class="mb-2">' + element.id + '</p>' +
+							'</div>';
+						notebookInformation.appendChild(listAll);
+					}
+				}
+
+				/* // Format the notebook information and remove all that is unecessary
+				var notebookInfo = jsonString.replace(/(\[\{"id":"|d":")(\S{31,33})","parent_id":\S{1,50},":"([\s\S]{1,50})","type_([\s\S]{1,}?"i|[\s\S]{1,})/g, '<p><b>Notebook:</b> $3<br><b>ID:</b> $2 <br><br></p>')
 
 				// Send the notebook information to the document
 				const notebookInformation = document.createElement('div')
 				notebookInformation.innerHTML = notebookInfo;
-				document.getElementById("show-notebooks").appendChild(notebookInformation)
+				document.getElementById("show-notebooks").appendChild(notebookInformation) */
 			}).catch(res => {
 				console.log("error", res);
 			});

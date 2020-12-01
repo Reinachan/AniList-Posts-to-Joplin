@@ -13,48 +13,102 @@
 </head>
 
 <body class="bg-black">
-  <div class="container-lg anilist">
-    <div class="container-fluid mt-5 mb-0 p-4 title">
+  <div class="jumbotron title">
+    <div class="container-lg title-text">
       <h1>AniList to Joplin Backup Tool</h1>
       <h4>Easy-to-use for non-programmers</h4>
-      Note that Joplin seems to have a bug which means that it occasionally won't the note ID that I create through a
-        function. That causes a duplication of those posts. If you get duplicate posts, delete all posts and run the
-        tool again. This is likely a problem with the web-syncing tool
+      <p>Joplin will occasionally create duplicates of the posts. In that case, delete all notes, go to the "conflicts" notebook and delete all the ones there as well. This is caused by the syncing tool in Joplin.</p>
     </div>
-    <form class="container-lg mt-0 p-4">
-      <label for="joplin-access-token">Joplin access-token:</label>
-      <input type="text" id="joplin-access-token"></input>
-      <p>You can find it on a computer under settings > Web Clipper. Make sure to enable the webclipper as well. The
-        port has to be "41184" and if it isn't, you'll have to edit the javascript.</p>
-      <label for="joplin-port">Joplin port:</label>
-      <input type="text" id="joplin-port" value="41184"></input>
-      <p>You'll find this at the top of the same menu you found the access token in. It should be 41184, but if not,
-        you'll have to type in that number in the box above</p>
-      <label for="anilist-user-id">AniList user ID:</label>
-      <input type="text" id="anilist-user-id"></input>
-      <p>You can find this by going to your profile, opening your profile picture in a new tab and looking at the URL
-        (page link). The user ID should be the numbers where I put X's in my example here:
-        user/avatar/large/b<b>XXXXXX</b>-sga2KA4fswV1.png</p>
-      <label for="joplin-access-token">Notebook ID</label>
-      <input type="text" id="notebook-id"></input>
-      <p>For where you want to place it all in Joplin
-        This one is a bit more complicated to figure out, so I'll provide you with a tool to fetch all your notebook IDs
-        easily below
-      </p>
-      <input type="checkbox" id="fetch-all-posts">I want to fetch every post (defaults to latest 50 if not)</input>
-      <p>It's only recommended to use this if you have never fetched your posts before or if you suspect you've written
-        or recieved more than 50 posts/messages since last time you used this backup. That or if you know you've
-        recieved likes/comments on older posts that you want to backup</p>
-      <input type="button" value="Backup Posts to Joplin" id="fetch-posts" class="btn btn-primary"></input>
+  </div>
+  <div class="container-lg anilist">
+    <form>
+      <fieldset class="p-5 mb-4 rounded-lg shadow-big">
+        <div>
+
+          <legend class="section-header"><span class="section-header-title">Joplin Stuff</span></legend>
+
+        </div>
+        <div class="form-group row">
+          <label for="joplin-access-token" class="col-sm-3 col-form-label">Joplin access-token:</label>
+          <div class="col-sm-9">
+            <input type="text" id="joplin-access-token" class="form-control" placeholder="access token"></input>
+            <small id="access-token-help" class="form-text text-muted">You can find it on a computer under settings >
+              Web
+              Clipper. Make sure to enable the webclipper as well. The
+              port has to be "41184" and if it isn't, you'll have to edit the javascript.</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="joplin-port" class="col-sm-3 col-form-label">Joplin port:</label>
+          <div class="col-sm-9">
+            <input type="text" id="joplin-port" value="41184" class="form-control"></input>
+            <small id="joplin-port-help" class="form-text text-muted">You'll find this at the top of the same menu you
+              found the access token in. It should be 41184, but if not,
+              you'll have to type in that number in the box above</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="notebook-id" class="col-sm-3 col-form-label">Notebook ID:</label>
+          <div class="col-sm-9">
+            <input type="text" id="notebook-id" class="form-control"></input>
+            <small id="joplin-notebook-help" class="form-text text-muted">For where you want to place it all in Joplin
+              This one is a bit more complicated to figure out, so I'll provide you with a tool to fetch all your
+              notebook
+              IDs
+              easily below
+            </small>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="p-5 mb-4 rounded-lg shadow-big">
+        <div>
+          <legend class="section-header"><span class="section-header-title">AniList Stuff</span></legend>
+        </div>
+        <div class="form-group row">
+          <label for="anilist-user-id" class="col-sm-3 col-form-label">AniList user ID:</label>
+          <div class="col-sm-9">
+            <input type="text" id="anilist-user-id" class="form-control"></input>
+            <small id="access-token-help" class="form-text text-muted">You can find this by going to your profile,
+              opening your profile picture in a new tab and looking at the
+              URL
+              (page link). The user ID should be the numbers where I put X's in my example here:
+              user/avatar/large/b<b>XXXXXX</b>-sga2KA4fswV1.png</small>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="p-5 mb-4 rounded-lg shadow-big">
+        <div class="form-group">
+          <div>
+            <legend class="section-header"><span class="section-header-title">Submit</span></legend>
+          </div>
+          <div class="col-sm-11 mx-auto">
+            <input class="form-check-input ml-1" type="checkbox" id="fetch-all-posts">
+            <label class="form-check-label ml-4">I want to fetch every post (defaults to latest 50 if not)</label>
+            <small id="access-token-help" class="form-text text-muted">It's only recommended to use this if you have
+              never fetched your posts before or if you suspect you've written or recieved more than 50 posts/messages
+              since last time you used this backup. That or if you know you've recieved likes/comments on older posts
+              that you want to backup</small>
+
+            <input type="button" value="Backup Posts to Joplin" id="fetch-posts" class="btn btn-primary mb-2"></input>
+            <div id="completed" class="alert-success"></div>
+          </div>
+        </div>
+      </fieldset>
     </form>
-    <div id="completed" class="alert-success"></div>
-    <h1>Get a list of all Notebooks along with their IDs</h1>
-    <p>Requires correct port in the section above</p>
-    <input type="button" value="Get all notebook IDs" id="fetch-notebook-id"></input>
-    <div id="show-notebooks" class="container-lg"></div>
+    <div class="list-notebooks container-lg p-5 shadow-big">
+      <legend class="section-header"><span class="section-header-title">Get a list of all Notebooks along with their
+          IDs</span></legend>
+          <div class="col-sm-11 mx-auto">
+            <p>Requires Joplin to be running</p>
+      <input type="button" value="Get all notebook IDs" id="fetch-notebook-id" class="btn btn-primary mb-2"></input>
+          </div>
+      <div class="container-fluid">
+        <div id="show-notebooks" class="row mt-3"></div>
+      </div>
+    </div>
   </div>
 </body>
-<footer>
+<footer class="p-4 mt-5">
   <p>Developed by Reina</p>
 
 </footer>

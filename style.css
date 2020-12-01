@@ -1,4 +1,5 @@
 :root {
+  --color-footer: #11161d;
   --color-blue: 120, 180, 255;
   --color-shadow-blue: 0, 0, 0;
   --color-foreground: 20, 25, 31;
@@ -12,23 +13,120 @@
 body {
   color: white;
   font-family: arial;
-  background-color: rgb(var(--color-foreground));
+  background-color: rgb(var(--color-background));
 }
-form {
-  background: rgb(var(--color-foreground-grey));
+fieldset {
+  background: rgb(var(--color-foreground));
 }
 .title {
   background-color: rgb(var(--color-foreground-grey-dark));
 }
-.show-notebooks {
-  min-height: 200px;
+.shadow-big {
+  box-shadow: 0 10px 20px #0008;
 }
-#fetch-notebook-id {
+.shadow-small {
+  box-shadow: 0 2px 5px #000a;
 }
 
 footer {
-  height: 500px;
+  height: 100px;
   width: 100%;
   text-align: center;
+  background-color: var(--color-footer);
+}
+
+/* Form stuff */
+.center {
+  margin: auto;
+  padding: 10px;
+}
+fieldset small {
+  margin-bottom: 2rem;
+}
+.form-control {
+  background-color: rgb(var(--color-foreground-grey));
+  border-color: rgb(1,1,1);
+  color: #ddd;
+}
+.form-control:focus {
+  background-color: rgb(var(--color-foreground-blue));
+  color:white;
+}
+.form-text {
+  color: #bbb!important;
+  padding-left: .5em;
+}
+.list-notebooks {
+  background: rgb(var(--color-foreground));
+}
+.individual-notes {
   background-color: rgb(var(--color-background));
+  font-size: 1rem;
+  word-wrap: break-word;
+}
+
+/* Legend Divider */
+.section-header {
+	position: relative;
+	text-align: center;
+}
+
+.section-header:before {
+	content: '';
+	z-index: 1;
+
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+
+	width: 100%;
+	height: 1px;
+
+	background: #dddddd;
+}
+
+.section-header-title {
+  position: relative;
+  z-index: 2;
+
+  background: rgb(var(--color-foreground));
+  padding: 5px 20px;
+
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+
+  display: inline-block;
+
+  color:white;
+}
+
+/* Generic Divider */
+hr.solid {
+  border-top: 3px solid #bbb;
+  max-width: 2rem;
+  text-align: left;
+  margin-left: 0;
+  margin-top: 0;
+  display: inline-block;
+}
+
+/* H5 dividers */
+h5 {
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+}
+h5:after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background: white;
+    min-width: 20px;
+    margin: auto;
+}
+
+h5:after {
+    margin-left: 20px;
 }
