@@ -1,5 +1,7 @@
 # AniList-Posts-to-Joplin
 
+Note: This repo uses some bad practices that I'm currently fixing in an unfinished rewrite.
+
 Uses the AniList API to fetch posts and comments and then makes those into notes in Joplin with proper markdown formating and stylisation.
 
 https://github.com/Reinachan/AniList-Posts-to-Joplin
